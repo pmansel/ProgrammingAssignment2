@@ -9,8 +9,8 @@
 ##  used to interact with the matrix.
 ##----------------------------------------------------------
 ## Description:
-##  The function will create a list of functions that will
-##  allow to interact with the matrix:
+##  The function will create a list of functions that can
+##  be used to interact with the matrix:
 ##      - get: Returns the matrix itself
 ##      - set: Sets the value of the matrix (will also 
 ##          reset the cached value for the matrix inversion)
@@ -22,28 +22,38 @@
 makeCacheMatrix <- function(x = matrix()) {
     inv <- NULL
 
+    ##-----------------------------------------------------------------------
     ## set function: stores the matrix
+    ##-----------------------------------------------------------------------
     set <- function(y) {
         x <<- y
         inv <<- NULL
     }
 
+    ##-----------------------------------------------------------------------
     ## get function: returns the matrix
+    ##-----------------------------------------------------------------------
     get <- function() {
         return(x)
     }
 
+    ##-----------------------------------------------------------------------
     ## setmatrixinverse function: stores the matrix inverse in the cache
+    ##-----------------------------------------------------------------------
     setmatrixinverse <- function(i) {
         inv <<- i
     }
 
+    ##-----------------------------------------------------------------------
     ## getmatrixinverse function: returns the matrix inverse from the cache
+    ##-----------------------------------------------------------------------
     getmatrixinverse <- function() {
         return(inv)
     }
 
+    ##-----------------------------------------------------------------------
     ## Returns the list with matrix function handlers
+    ##-----------------------------------------------------------------------
     list(set = set, get = get, setmatrixinverse = setmatrixinverse,
            getmatrixinverse = getmatrixinverse)
 }
@@ -85,7 +95,7 @@ cacheSolve <- function(x, ...) {
     ## Note: We assume that the matrix is invertible.
     inv <- solve(data, ...)
 
-    ## Cache the value
+    ## Finally, put the result of the computation in the cache
     x$setmatrixinverse(inv)
 
     return(inv)
